@@ -14,7 +14,11 @@ public class AppMain {
         KeyRegex keyRegex = new KeyRegex(keySearcherRegex, 1, 2);
         FileAnalyzer fileAnalyzer = new FileAnalyzer(keyContainer, keyRegex);
 
-        fileAnalyzer.getKeysInLine(textFileReader.ReadNextLine());
+        int i = 10;
+        while (textFileReader.ReadNextLine() != null & i != 0) {
+            fileAnalyzer.getKeysInLine(textFileReader.ReadNextLine());
+            i--;
+        }
         System.out.println(keyContainer.getKeysInJSON());
     }
 }

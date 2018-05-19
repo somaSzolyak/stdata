@@ -11,11 +11,8 @@ public class KeyContainer {
 
     //todo key addition should increase the value by 1 or add a new key and set value to 1
     private void add(String key){
-        if (keysInJSON.containsKey(key)) {
-            int value = keysInJSON.get(key);
-            keysInJSON.put(key, value+1);
-        }
-        keysInJSON.put(key, 1);
+        int count = keysInJSON.containsKey(key) ? keysInJSON.get(key) : 0;
+        keysInJSON.put(key, count + 1);
     }
 
     public void add(List<String> keyList) {
