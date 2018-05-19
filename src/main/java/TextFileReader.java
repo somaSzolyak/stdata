@@ -1,15 +1,14 @@
-import java.io.File;
-import java.io.FileNotFoundException;
+import java.io.*;
 import java.util.Scanner;
 
 public class TextFileReader {
-    private Scanner scanner;
+    private BufferedReader bufferedReader;
 
     public TextFileReader(File file) throws FileNotFoundException {
-        scanner = new Scanner(file);
+        bufferedReader = new BufferedReader(new FileReader(file));
     }
 
-    public String ReadNextLine (){
-        return scanner.hasNext() ? scanner.nextLine() : null;
+    public String ReadNextLine () throws IOException {
+        return bufferedReader.readLine();
     }
 }
