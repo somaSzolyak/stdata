@@ -1,5 +1,6 @@
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 public class KeyContainer {
     private Map<String, Integer> keysInJSON;
@@ -20,7 +21,16 @@ public class KeyContainer {
         }
     }
 
-    public Map<String, Integer> getKeysInJSON() {
+    public Map<String, Integer> getData() {
         return keysInJSON;
+    }
+
+    public String toString() {
+        StringBuilder stringBuilder = new StringBuilder();
+        Set<String> keys = keysInJSON.keySet();
+        for (String key : keys) {
+            stringBuilder.append(key + " - " + keysInJSON.get(key) + "\n");
+        }
+        return stringBuilder.toString();
     }
 }

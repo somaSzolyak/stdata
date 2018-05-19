@@ -15,5 +15,6 @@ public class AppMain {
         FileAnalyzer fileAnalyzer = new FileAnalyzer(keyContainer, keyRegex);
 
         fileAnalyzer.getKeysInFile(textFileReader);
+        fileAnalyzer.keyFrequencyInFile();
     }
 }
