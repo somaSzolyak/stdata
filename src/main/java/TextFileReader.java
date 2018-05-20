@@ -1,5 +1,4 @@
 import java.io.*;
-import java.util.Scanner;
 
 public class TextFileReader {
     private BufferedReader bufferedReader;
@@ -9,6 +8,6 @@ public class TextFileReader {
     }
 
     public String ReadNextLine () throws IOException {
-        return bufferedReader.readLine();
+        return bufferedReader.ready() ? bufferedReader.readLine() : null;
     }
 }

@@ -25,12 +25,7 @@ public class KeyContainer {
         return keysInJSON;
     }
 
-    public String toString() {
-        StringBuilder stringBuilder = new StringBuilder();
-        Set<String> keys = keysInJSON.keySet();
-        for (String key : keys) {
-            stringBuilder.append(key + " - " + keysInJSON.get(key) + "\n");
-        }
-        return stringBuilder.toString();
+    public void remove(String key) {
+        keysInJSON.remove(key);
     }
 }

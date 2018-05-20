@@ -24,9 +24,6 @@ public class FileAnalyzer {
             getKeysInLine(line);
             lineCount++;
         }
-        System.out.println(keyContainer.getData());
-        // System.out.println(keyContainer.toString());
-        System.out.println(lineCount);
     }
 
     public void keyFrequencyInFile() {
@@ -35,9 +32,43 @@ public class FileAnalyzer {
         for (String key : keys) {
             keyFrequency.put(key, (double) keyContainer.getData().get(key)/lineCount);
         }
-        System.out.println(keyFrequency);
+        discardRedundantKeys();
     }
 
+    private void discardRedundantKeys() {
+        discardRedundantKeyByFrequency();
+        discardRedundantKeyByUselessValue();
+    }
 
+    private void discardRedundantKeyByUselessValue() {
+        /// TODO: 2018.05.20. the body of this function is tricky as hell cause it has to be determined either at the 1st go through or at the second time
+    }
 
+    private void discardRedundantKeyByFrequency() {
+        Map<String, Integer> tmpContainer = new HashMap<String, Integer>();
+        Map<String, Double> tmpFrequency = new HashMap<String, Double>();
+        for (String key : keyContainer.getData().keySet()) {
+            if (keyFrequency.get(key) > 0.009 & keyFrequency.get(key) < 0.9) {
+                tmpContainer.put(key, keyContainer.getData().get(key));
+                tmpFrequency.put(key, keyFrequency.get(key));
+            }
+        }
+        keyContainer.getData().clear();
+        keyContainer.getData().putAll(tmpContainer);
+        keyFrequency.clear();
+        keyFrequency.putAll(tmpFrequency);
+    }
+
+    public void report() {
+        System.out.println(keyContainer.getData());
+        System.out.println(keyFrequency);
+        System.out.println(keyRegex.getKeySearcherRegex());
+        System.out.println(lineCount);
+    }
+
+    //todo decide if a key holds no information aka key is redundant
+
+    //todo get specific key value from JSON
+
+    //todo choose relevant keys from not redundant keys
 }

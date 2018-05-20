@@ -40,4 +40,8 @@ public class KeyRegex {
             System.out.println(" Found: " + matcher.group());
         }
     }
+
+    public String getKeySearcherRegex() {
+        return keySearcherRegex;
+    }
 }
