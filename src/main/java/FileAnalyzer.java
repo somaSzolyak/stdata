@@ -1,3 +1,5 @@
+import java.io.BufferedWriter;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
@@ -53,15 +55,6 @@ public class FileAnalyzer {
             }
             uniqueValueListForKey.add(key, valueRegex.getMatchesInString(line));
         }
-//        String key = keyContainer.getData().keySet().iterator().next();
-//        valueRegex.setKey(key);
-//        if (isNewKeyValue(key) != null) {
-//            uniqueValueListForKey = isNewKeyValue(key);
-//        } else {
-//            uniqueValueListForKey = new UniqueValueListForKey(key);
-//            uniqueValueListForKeys.add(uniqueValueListForKey);
-//        }
-//        uniqueValueListForKey.add(key, valueRegex.getMatchesInString(line));
     }
 
     private UniqueValueListForKey isNewKeyValue(String key) {
@@ -121,14 +114,15 @@ public class FileAnalyzer {
         System.out.println("\n");
     }
 
-    public void valueReport() {
-        System.out.println("\nValueReport");
-        System.out.println(uniqueValueListForKeys.size());
+    public void valueReport() throws IOException {
+        BufferedWriter writer = new BufferedWriter(new FileWriter("report"));
+        writer.write("\nValueReport");
+        writer.write(uniqueValueListForKeys.size());
         for (UniqueValueListForKey uniqueValueListForKey :
                 uniqueValueListForKeys) {
-            System.out.println(uniqueValueListForKey.getKeyName());
-            System.out.println(uniqueValueListForKey.getValueMap().getUniqueValueOccurrence());
-            System.out.println("\n");
+            writer.write(uniqueValueListForKey.getKeyName());
+            writer.write(uniqueValueListForKey.getValueMap().getUniqueValueOccurrence().toString());
+            writer.write("\n");
         }
     }
 
