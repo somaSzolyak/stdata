@@ -23,6 +23,12 @@ public class AppMain {
         redundantKeyList.add("last_name");
         redundantKeyList.add("first_name");
         redundantKeyList.add("parent");
+        redundantKeyList.add("age_range");
+        redundantKeyList.add("238");
+        redundantKeyList.add("209");
+        redundantKeyList.add("crchash");
+        redundantKeyList.add("181");
+        redundantKeyList.add("facebook");
         KeyContainer keyContainer = new KeyContainer(new HashMap<String, Integer>(), redundantKeyList);
         ValueRegex valueRegex = new ValueRegex(keyWithValueRegex, 1);
         KeyRegex keyRegexForValue = new KeyRegex(keyValueRegex, 1, 3, valueRegex);
@@ -31,6 +37,7 @@ public class AppMain {
 
         fileAnalyzerForValues.getKeysInFile();
         fileAnalyzerForValues.keyFrequencyInFile();
+        fileAnalyzerForValues.discardRedundantKeys();
         fileAnalyzerForValues.report();
 
         fileAnalyzerForValues.getUniqueValuesForKeysInFile();

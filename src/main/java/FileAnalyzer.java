@@ -79,10 +79,9 @@ public class FileAnalyzer {
         for (String key : keys) {
             keyFrequency.put(key, (double) keyContainer.getData().get(key)/lineCount);
         }
-        discardRedundantKeys();
     }
 
-    private void discardRedundantKeys() {
+    public void discardRedundantKeys() {
         discardRedundantKeyByFrequency();
         discardRedundantKeyByUselessValue();
         discardRedundantKeyByPredeterminedList();
