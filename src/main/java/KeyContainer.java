@@ -31,4 +31,8 @@ public class KeyContainer {
     public void remove(String key) {
         keysInJSON.remove(key);
     }
+
+    public List<String> getRedundantKeyList() {
+        return redundantKeyList;
+    }
 }

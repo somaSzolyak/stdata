@@ -37,11 +37,9 @@ public class UniqueValueListForKey {
     @Override
     public String toString() {
         StringBuilder stringBuilder = new StringBuilder();
-        stringBuilder.append("UniqueValueListForKey{\n" + "\tkeyName :'" + keyName + '\'' + '\n');
-        for (UniqueValueOccurrenceMap valueOccurrenceMap : valueList) {
-            stringBuilder.append(valueOccurrenceMap.toString());
-        }
-        stringBuilder.append("}");
+        stringBuilder.append("UniqueValueListForKey{\n" + "keyName :'" + keyName + '\'' + '\n');
+        stringBuilder.append(valueList);
+        stringBuilder.append("\n}");
          return stringBuilder.toString();
     }
 }

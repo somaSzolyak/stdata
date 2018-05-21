@@ -32,17 +32,6 @@ public class KeyRegex {
         return matchList;
     }
 
-    public void printMatches(String text) {
-        pattern = Pattern.compile(keySearcherRegex);
-        matcher = pattern.matcher(text);
-        // Check all occurrences
-        while (matcher.find()) {
-            System.out.print("Start index: " + matcher.start());
-            System.out.print(" End index: " + matcher.end());
-            System.out.println(" Found: " + matcher.group());
-        }
-    }
-
     public String getKeySearcherRegex() {
         return keySearcherRegex;
     }

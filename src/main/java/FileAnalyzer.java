@@ -1,4 +1,5 @@
 import java.io.IOException;
+import java.sql.SQLOutput;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -35,35 +36,40 @@ public class FileAnalyzer {
     public void getUniqueValuesForKeysInFile() throws IOException {
         textFileReader.reset();
         String line;
-        //int limit = 10;
         while ((line = textFileReader.ReadNextLine()) != null) {
-//            System.out.println("\nnew line");
             getUniqueValuesForKeysInLine(line);
-            //limit--;
         }
     }
 
     private void getUniqueValuesForKeysInLine(String line) {
         ValueRegex valueRegex = keyRegex.getValueRegex();
         UniqueValueListForKey uniqueValueListForKey;
-        for (String key : keyContainer.getData().keySet()) {
-            valueRegex.setKey(key);
-//            System.out.println("\n" + key);
-//            System.out.println(valueRegex.getKey());
-            if (isNewKeyValue(key) != null) {
-                uniqueValueListForKey = isNewKeyValue(key);
-            } else {
-                uniqueValueListForKey = new UniqueValueListForKey(key);
-            }
-            uniqueValueListForKey.add(key, valueRegex.getMatchesInString(line));
+//        for (String key : keyContainer.getData().keySet()) {
+//            valueRegex.setKey(key);
+////            System.out.println("\n" + key);
+////            System.out.println(valueRegex.getKey());
+//            if (isNewKeyValue(key) != null) {
+//                uniqueValueListForKey = isNewKeyValue(key);
+//            } else {
+//                uniqueValueListForKey = new UniqueValueListForKey(key);
+//            }
+//            uniqueValueListForKey.add(key, valueRegex.getMatchesInString(line));
+//            uniqueValueListForKeys.add(uniqueValueListForKey);
+        //}
+        String key = keyContainer.getData().keySet().iterator().next();
+        valueRegex.setKey(key);
+        if (isNewKeyValue(key) != null) {
+            uniqueValueListForKey = isNewKeyValue(key);
+        } else {
+            uniqueValueListForKey = new UniqueValueListForKey(key);
             uniqueValueListForKeys.add(uniqueValueListForKey);
+            System.out.println("creating new list for " + key);
         }
-        //System.out.println("\n");
+        uniqueValueListForKey.add(key, valueRegex.getMatchesInString(line));
     }
 
     private UniqueValueListForKey isNewKeyValue(String key) {
-        for (UniqueValueListForKey uniqueValueListForKey :
-                uniqueValueListForKeys) {
+        for (UniqueValueListForKey uniqueValueListForKey : uniqueValueListForKeys) {
             if (uniqueValueListForKey.getKeyName().equals(key)) {
                 return uniqueValueListForKey;
             }
@@ -83,6 +89,14 @@ public class FileAnalyzer {
     private void discardRedundantKeys() {
         discardRedundantKeyByFrequency();
         discardRedundantKeyByUselessValue();
+        discardRedundantKeyByPredeterminedList();
+    }
+
+    private void discardRedundantKeyByPredeterminedList() {
+        List<String> redundantKeys = keyContainer.getRedundantKeyList();
+        for (String key : redundantKeys) {
+            keyContainer.remove(key);
+        }
     }
 
     private void discardRedundantKeyByUselessValue() {
@@ -113,9 +127,9 @@ public class FileAnalyzer {
     }
 
     public void valueReport() {
-        for (UniqueValueListForKey uvlfk : uniqueValueListForKeys) {
-            uvlfk.toString();
-        }
+        System.out.println("\nValueReport");
+        System.out.println(uniqueValueListForKeys.size());
+        System.out.println(uniqueValueListForKeys.get(0));
     }
 
 

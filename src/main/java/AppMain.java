@@ -25,13 +25,9 @@ public class AppMain {
         redundantKeyList.add("parent");
         KeyContainer keyContainer = new KeyContainer(new HashMap<String, Integer>(), redundantKeyList);
         ValueRegex valueRegex = new ValueRegex(keyWithValueRegex, 1);
-        //KeyRegex keyRegex = new KeyRegex(keySearcherRegex, 1, 2);
         KeyRegex keyRegexForValue = new KeyRegex(keyValueRegex, 1, 3, valueRegex);
-        //KeyRegex keyRegexForObject = new KeyRegex(keyObjectRegex, 1, 3);
         ArrayList<UniqueValueListForKey> uniqueValueListForKeys = new ArrayList<UniqueValueListForKey>();
-        //FileAnalyzer fileAnalyzer = new FileAnalyzer(keyContainer, keyRegex);
         FileAnalyzer fileAnalyzerForValues = new FileAnalyzer(keyContainer, keyRegexForValue, textFileReader, uniqueValueListForKeys);
-        //FileAnalyzer fileAnalyzerForObjects = new FileAnalyzer(keyContainer, keyRegexForObject);
 
         fileAnalyzerForValues.getKeysInFile();
         fileAnalyzerForValues.keyFrequencyInFile();

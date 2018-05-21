@@ -35,12 +35,6 @@ public class ValueRegex {
         bindPattern();
         matcher = pattern.matcher(string);
         while (matcher.find()) {
-            // TODO: 2018.05.21. remove souts if the are not needed
-//            System.out.println(valueSearcherRegex);
-//            System.out.println("start: " + (matcher.start() + startOffset));
-//            System.out.println("end: " + (matcher.end() - endOffset));
-//            System.out.println(matcher.group());
-//            System.out.println("substring: " + string.substring(matcher.start() + startOffset, matcher.end() - endOffset));
             matchList.add(string.substring(matcher.start() + startOffset, matcher.end() - endOffset));
         }
         freePattern();
