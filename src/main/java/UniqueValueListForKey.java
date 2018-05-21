@@ -30,6 +30,7 @@ public class UniqueValueListForKey {
     }
 
     private void add(String value) {
+        // TODO: 2018.05.21. check if value is a number. If so discard it. 
         if (!valueMap.isMyValueKey(value)) {
             this.valueMap.add(value);
         } else {

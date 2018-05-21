@@ -19,9 +19,7 @@ public class UniqueValueOccurrenceMap {
     }
 
     public void add(String valueKey) {
-        if (!valueKey.contains("[0-9]+")) {
-            uniqueValueOccurrence.put(valueKey, 1);
-        }
+        uniqueValueOccurrence.put(valueKey, 1);
     }
 
     public Map<String, Integer> getUniqueValueOccurrence() {
