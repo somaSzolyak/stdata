@@ -36,13 +36,14 @@ public class ValueRegex {
         matcher = pattern.matcher(string);
         while (matcher.find()) {
             // TODO: 2018.05.21. remove souts if the are not needed
-            System.out.println(valueSearcherRegex);
-            System.out.println("start: " + (matcher.start() + startOffset));
-            System.out.println("end: " + (matcher.end() - endOffset));
-            System.out.println(matcher.group());
-            System.out.println("substring: " + string.substring(matcher.start() + startOffset, matcher.end() - endOffset));
+//            System.out.println(valueSearcherRegex);
+//            System.out.println("start: " + (matcher.start() + startOffset));
+//            System.out.println("end: " + (matcher.end() - endOffset));
+//            System.out.println(matcher.group());
+//            System.out.println("substring: " + string.substring(matcher.start() + startOffset, matcher.end() - endOffset));
             matchList.add(string.substring(matcher.start() + startOffset, matcher.end() - endOffset));
         }
+        freePattern();
         return matchList;
 
     }
@@ -50,5 +51,14 @@ public class ValueRegex {
     private void bindPattern() {
         valueSearcherRegex = valueSearcherRegex.replaceAll("~", key);
         pattern = Pattern.compile(valueSearcherRegex);
+    }
+
+    private void freePattern() {
+        valueSearcherRegex = valueSearcherRegex.replaceAll(key, "~");
+        pattern = null;
+    }
+
+    public String getKey() {
+        return key;
     }
 }

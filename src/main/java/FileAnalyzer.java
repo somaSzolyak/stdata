@@ -37,7 +37,7 @@ public class FileAnalyzer {
         String line;
         //int limit = 10;
         while ((line = textFileReader.ReadNextLine()) != null) {
-            //System.out.println(line);
+//            System.out.println("\nnew line");
             getUniqueValuesForKeysInLine(line);
             //limit--;
         }
@@ -48,6 +48,8 @@ public class FileAnalyzer {
         UniqueValueListForKey uniqueValueListForKey;
         for (String key : keyContainer.getData().keySet()) {
             valueRegex.setKey(key);
+//            System.out.println("\n" + key);
+//            System.out.println(valueRegex.getKey());
             if (isNewKeyValue(key) != null) {
                 uniqueValueListForKey = isNewKeyValue(key);
             } else {
@@ -111,8 +113,7 @@ public class FileAnalyzer {
     }
 
     public void valueReport() {
-        for (UniqueValueListForKey uvlfk :
-                uniqueValueListForKeys) {
+        for (UniqueValueListForKey uvlfk : uniqueValueListForKeys) {
             uvlfk.toString();
         }
     }
