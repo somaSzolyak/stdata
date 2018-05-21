@@ -1,15 +1,15 @@
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 public class KeyContainer {
     private Map<String, Integer> keysInJSON;
+    private List<String> redundantKeyList;
 
-    public KeyContainer(Map<String, Integer> keysInJSON) {
+    public KeyContainer(Map<String, Integer> keysInJSON, List<String> redundantKeyList) {
         this.keysInJSON = keysInJSON;
+        this.redundantKeyList = redundantKeyList;
     }
 
-    //todo key addition should increase the value by 1 or add a new key and set value to 1
     private void add(String key){
         int count = keysInJSON.containsKey(key) ? keysInJSON.get(key) : 0;
         keysInJSON.put(key, count + 1);
@@ -17,6 +17,9 @@ public class KeyContainer {
 
     public void add(List<String> keyList) {
         for (String key : keyList) {
+            if (redundantKeyList.contains(key)) {
+                continue;
+            }
             this.add(key);
         }
     }

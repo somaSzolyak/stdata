@@ -13,12 +13,14 @@ public class KeyRegex {
     private int endOffset;
     private Pattern pattern;
     private Matcher matcher;
+    private ValueRegex valueRegex;
 
-    public KeyRegex(String keySearcherRegex, int startOffset, int endOffset) {
+    public KeyRegex(String keySearcherRegex, int startOffset, int endOffset, ValueRegex valueRegex) {
         this.keySearcherRegex = keySearcherRegex;
         this.startOffset = startOffset;
         this.endOffset = endOffset;
         this.pattern = Pattern.compile(keySearcherRegex);
+        this.valueRegex = valueRegex;
     }
 
     public List<String> getMatchesInString(String string) {
@@ -43,5 +45,9 @@ public class KeyRegex {
 
     public String getKeySearcherRegex() {
         return keySearcherRegex;
+    }
+
+    public ValueRegex getValueRegex() {
+        return valueRegex;
     }
 }

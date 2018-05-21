@@ -16,4 +16,14 @@ public class UniqueValueOccurrenceMap {
         }
         return false;
     }
+
+    @Override
+    public String toString() {
+        StringBuilder stringBuilder = new StringBuilder();
+        for (String key :
+                uniqueValueOccurrence.keySet()) {
+            stringBuilder.append("\t\t'" + key + "\' : " + uniqueValueOccurrence.get(key) + "\n");
+        }
+        return stringBuilder.toString();
+    }
 }
