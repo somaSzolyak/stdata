@@ -1,12 +1,11 @@
-import java.util.ArrayList;
 import java.util.List;
 
 public class UniqueValueListForKey {
-    private List<UniqueValueOccurrenceMap> valueList;
+    private UniqueValueOccurrenceMap valueMap;
     private String keyName;
 
     public UniqueValueListForKey(String keyName) {
-        this.valueList = null;
+        this.valueMap = null;
         this.keyName = keyName;
     }
 
@@ -14,12 +13,16 @@ public class UniqueValueListForKey {
         return keyName;
     }
 
+    public UniqueValueOccurrenceMap getValueMap() {
+        return valueMap;
+    }
+
     public void add(String keyName, List<String> valueList) {
         if (!this.keyName.equals(keyName)) {
             throw new IllegalArgumentException("You are trying to add a value to the wrong key");
         }
-        if (this.valueList == null) {
-            this.valueList = new ArrayList<UniqueValueOccurrenceMap>();
+        if (this.valueMap == null & valueList.size() > 0) {
+            this.valueMap = new UniqueValueOccurrenceMap(valueList.get(0));
         }
         for (String value : valueList) {
             add(value);
@@ -27,10 +30,10 @@ public class UniqueValueListForKey {
     }
 
     private void add(String value) {
-        for (UniqueValueOccurrenceMap valueMap : valueList) {
-            if (!valueMap.isMyValueKey(value)) {
-                valueList.add(new UniqueValueOccurrenceMap(value));
-            }
+        if (!valueMap.isMyValueKey(value)) {
+            this.valueMap.add(value);
+        } else {
+            valueMap.increaseOccurrence(value);
         }
     }
 
@@ -38,8 +41,8 @@ public class UniqueValueListForKey {
     public String toString() {
         StringBuilder stringBuilder = new StringBuilder();
         stringBuilder.append("UniqueValueListForKey{\n" + "keyName :'" + keyName + '\'' + '\n');
-        stringBuilder.append(valueList);
+        stringBuilder.append(valueMap);
         stringBuilder.append("\n}");
-         return stringBuilder.toString();
+        return stringBuilder.toString();
     }
 }

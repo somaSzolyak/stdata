@@ -1,5 +1,4 @@
 import java.io.IOException;
-import java.sql.SQLOutput;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -44,28 +43,25 @@ public class FileAnalyzer {
     private void getUniqueValuesForKeysInLine(String line) {
         ValueRegex valueRegex = keyRegex.getValueRegex();
         UniqueValueListForKey uniqueValueListForKey;
-//        for (String key : keyContainer.getData().keySet()) {
-//            valueRegex.setKey(key);
-////            System.out.println("\n" + key);
-////            System.out.println(valueRegex.getKey());
-//            if (isNewKeyValue(key) != null) {
-//                uniqueValueListForKey = isNewKeyValue(key);
-//            } else {
-//                uniqueValueListForKey = new UniqueValueListForKey(key);
-//            }
-//            uniqueValueListForKey.add(key, valueRegex.getMatchesInString(line));
-//            uniqueValueListForKeys.add(uniqueValueListForKey);
-        //}
-        String key = keyContainer.getData().keySet().iterator().next();
-        valueRegex.setKey(key);
-        if (isNewKeyValue(key) != null) {
-            uniqueValueListForKey = isNewKeyValue(key);
-        } else {
-            uniqueValueListForKey = new UniqueValueListForKey(key);
-            uniqueValueListForKeys.add(uniqueValueListForKey);
-            System.out.println("creating new list for " + key);
+        for (String key : keyContainer.getData().keySet()) {
+            valueRegex.setKey(key);
+            if (isNewKeyValue(key) != null) {
+                uniqueValueListForKey = isNewKeyValue(key);
+            } else {
+                uniqueValueListForKey = new UniqueValueListForKey(key);
+                uniqueValueListForKeys.add(uniqueValueListForKey);
+            }
+            uniqueValueListForKey.add(key, valueRegex.getMatchesInString(line));
         }
-        uniqueValueListForKey.add(key, valueRegex.getMatchesInString(line));
+//        String key = keyContainer.getData().keySet().iterator().next();
+//        valueRegex.setKey(key);
+//        if (isNewKeyValue(key) != null) {
+//            uniqueValueListForKey = isNewKeyValue(key);
+//        } else {
+//            uniqueValueListForKey = new UniqueValueListForKey(key);
+//            uniqueValueListForKeys.add(uniqueValueListForKey);
+//        }
+//        uniqueValueListForKey.add(key, valueRegex.getMatchesInString(line));
     }
 
     private UniqueValueListForKey isNewKeyValue(String key) {
@@ -129,7 +125,10 @@ public class FileAnalyzer {
     public void valueReport() {
         System.out.println("\nValueReport");
         System.out.println(uniqueValueListForKeys.size());
-        System.out.println(uniqueValueListForKeys.get(0));
+        for (UniqueValueListForKey uniqueValueListForKey :
+                uniqueValueListForKeys) {
+            System.out.println(uniqueValueListForKey);
+        }
     }
 
 

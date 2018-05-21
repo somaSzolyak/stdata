@@ -6,14 +6,19 @@ public class UniqueValueOccurrenceMap {
 
     public UniqueValueOccurrenceMap(String valueKey) {
         this.uniqueValueOccurrence = new HashMap<String, Integer>();
-        uniqueValueOccurrence.put(valueKey, 1);
+        add(valueKey);
     }
 
+    // TODO: 2018.05.21. remove shout
     public boolean isMyValueKey(String valueKey){
-        if (uniqueValueOccurrence.containsKey(valueKey)) {
-            uniqueValueOccurrence.put(valueKey, uniqueValueOccurrence.get(valueKey)+1);
-            return true;
-        }
-        return false;
+        return uniqueValueOccurrence.containsKey(valueKey);
+    }
+
+    public void increaseOccurrence(String valueKey) {
+        uniqueValueOccurrence.put(valueKey, uniqueValueOccurrence.get(valueKey)+1);
+    }
+
+    public void add(String valueKey) {
+        uniqueValueOccurrence.put(valueKey, 1);
     }
 }
