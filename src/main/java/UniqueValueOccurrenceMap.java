@@ -21,4 +21,8 @@ public class UniqueValueOccurrenceMap {
     public void add(String valueKey) {
         uniqueValueOccurrence.put(valueKey, 1);
     }
+
+    public Map<String, Integer> getUniqueValueOccurrence() {
+        return uniqueValueOccurrence;
+    }
 }

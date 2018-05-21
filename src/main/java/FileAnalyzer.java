@@ -126,7 +126,9 @@ public class FileAnalyzer {
         System.out.println(uniqueValueListForKeys.size());
         for (UniqueValueListForKey uniqueValueListForKey :
                 uniqueValueListForKeys) {
-            System.out.println(uniqueValueListForKey);
+            System.out.println(uniqueValueListForKey.getKeyName());
+            System.out.println(uniqueValueListForKey.getValueMap().getUniqueValueOccurrence());
+            System.out.println("\n");
         }
     }
 
