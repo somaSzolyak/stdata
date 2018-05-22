@@ -5,10 +5,12 @@ import java.util.regex.Pattern;
 public class UniqueValueListForKey {
     private UniqueValueOccurrenceMap valueMap;
     private String keyName;
+    private List<String> stringOnlyKeys;
 
-    public UniqueValueListForKey(String keyName) {
+    public UniqueValueListForKey(String keyName, List<String> stringOnlyKeys) {
         this.valueMap = null;
         this.keyName = keyName;
+        this.stringOnlyKeys = stringOnlyKeys;
     }
 
     public String getKeyName() {
@@ -32,15 +34,23 @@ public class UniqueValueListForKey {
     }
 
     private void add(String value) {
-        // TODO: 2018.05.21. check if value is a number. If so discard it.
-        Pattern pattern = Pattern.compile("[\\d]+");
-        Matcher matcher = pattern.matcher(value);
-        if (!matcher.find()) {
-            if (!valueMap.isMyValueKey(value)) {
-                valueMap.add(value);
-            } else {
-                valueMap.increaseOccurrence(value);
+        // must hardcode key selection
+        if (stringOnlyKeys.contains(keyName)) {
+            Pattern pattern = Pattern.compile("[\\d]+");
+            Matcher matcher = pattern.matcher(value);
+            if (!matcher.find()) {
+                addNewOrIncrementValue(value);
             }
+        } else {
+            addNewOrIncrementValue(value);
+        }
+    }
+
+    private void addNewOrIncrementValue(String value) {
+        if (!valueMap.isMyValueKey(value)) {
+            valueMap.add(value);
+        } else {
+            valueMap.increaseOccurrence(value);
         }
     }
 }

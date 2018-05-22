@@ -1,5 +1,3 @@
-import java.io.BufferedWriter;
-import java.io.FileWriter;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
@@ -11,14 +9,16 @@ public class FileAnalyzer {
     private KeyRegex keyRegex;
     private Map<String, Double> keyFrequency;
     private List<UniqueValueListForKey> uniqueValueListForKeys;
+    private List<String> stringOnlyKeys;
     private TextFileReader textFileReader;
     private int lineCount = 0;
 
-    public FileAnalyzer(KeyContainer keyContainer, KeyRegex keyRegex, TextFileReader textFileReader, List<UniqueValueListForKey> uniqueValueListForKeys) {
+    public FileAnalyzer(KeyContainer keyContainer, KeyRegex keyRegex, TextFileReader textFileReader, List<UniqueValueListForKey> uniqueValueListForKeys, List<String> stringOnlyKeys) {
         this.keyContainer = keyContainer;
         this.keyRegex = keyRegex;
         this.textFileReader = textFileReader;
         this.uniqueValueListForKeys = uniqueValueListForKeys;
+        this.stringOnlyKeys = stringOnlyKeys;
     }
 
     private void getKeysInLine(String line){
@@ -69,7 +69,7 @@ public class FileAnalyzer {
             if (isNewKeyValue(key) != null) {
                 uniqueValueListForKey = isNewKeyValue(key);
             } else {
-                uniqueValueListForKey = new UniqueValueListForKey(key);
+                uniqueValueListForKey = new UniqueValueListForKey(key, stringOnlyKeys);
                 uniqueValueListForKeys.add(uniqueValueListForKey);
             }
             uniqueValueListForKey.add(key, valueRegex.getMatchesInString(line));
@@ -129,17 +129,11 @@ public class FileAnalyzer {
     }
 
     public void valueReport() throws IOException {
-        BufferedWriter writer = new BufferedWriter(new FileWriter("report.txt"));
-        writer.write("\nValueReport\n");
-        writer.write(uniqueValueListForKeys.size());
-        for (UniqueValueListForKey uniqueValueListForKey : uniqueValueListForKeys) {
-            writer.write(uniqueValueListForKey.getKeyName());
-            writer.write(uniqueValueListForKey.getValueMap().getUniqueValueOccurrence().toString());
-            writer.write("\n");
-        }
-
         System.out.println("\nValueReport\n");
-        System.out.println(uniqueValueListForKeys.size());
+        System.out.println("Number of keys: " + uniqueValueListForKeys.size());
+        System.out.println(keyContainer.getData());
+        System.out.println(keyFrequency);
+        System.out.println(" ");
         for (UniqueValueListForKey uniqueValueListForKey : uniqueValueListForKeys) {
             System.out.println(uniqueValueListForKey.getKeyName());
             System.out.println(uniqueValueListForKey.getValueMap().getUniqueValueOccurrence().toString());
