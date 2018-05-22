@@ -34,11 +34,30 @@ public class FileAnalyzer {
         textFileReader.close();
     }
 
+    public void getKeysInFile(int lineNumber) throws IOException {
+        String line;
+        while ((line = textFileReader.ReadNextLine()) != null & lineNumber != 0) {
+            getKeysInLine(line);
+            lineCount++;
+            lineNumber--;
+        }
+        textFileReader.close();
+    }
+
     public void getUniqueValuesForKeysInFile() throws IOException {
         textFileReader.reset();
         String line;
         while ((line = textFileReader.ReadNextLine()) != null) {
             getUniqueValuesForKeysInLine(line);
+        }
+    }
+
+    public void getUniqueValuesForKeysInFile(int lineNumber) throws IOException {
+        textFileReader.reset();
+        String line;
+        while ((line = textFileReader.ReadNextLine()) != null & lineNumber != 0) {
+            getUniqueValuesForKeysInLine(line);
+            lineNumber--;
         }
     }
 
@@ -76,7 +95,6 @@ public class FileAnalyzer {
 
     public void discardRedundantKeys() {
         discardRedundantKeyByFrequency();
-        discardRedundantKeyByUselessValue();
         discardRedundantKeyByPredeterminedList();
     }
 
@@ -85,10 +103,6 @@ public class FileAnalyzer {
         for (String key : redundantKeys) {
             keyContainer.remove(key);
         }
-    }
-
-    private void discardRedundantKeyByUselessValue() {
-        /// TODO: 2018.05.20. the body of this function is tricky as hell cause it has to be determined either at the 1st go through or at the second time
     }
 
     private void discardRedundantKeyByFrequency() {
@@ -115,21 +129,24 @@ public class FileAnalyzer {
     }
 
     public void valueReport() throws IOException {
-        BufferedWriter writer = new BufferedWriter(new FileWriter("report"));
-        writer.write("\nValueReport");
+        BufferedWriter writer = new BufferedWriter(new FileWriter("report.txt"));
+        writer.write("\nValueReport\n");
         writer.write(uniqueValueListForKeys.size());
-        for (UniqueValueListForKey uniqueValueListForKey :
-                uniqueValueListForKeys) {
+        for (UniqueValueListForKey uniqueValueListForKey : uniqueValueListForKeys) {
             writer.write(uniqueValueListForKey.getKeyName());
             writer.write(uniqueValueListForKey.getValueMap().getUniqueValueOccurrence().toString());
             writer.write("\n");
+        }
+
+        System.out.println("\nValueReport\n");
+        System.out.println(uniqueValueListForKeys.size());
+        for (UniqueValueListForKey uniqueValueListForKey : uniqueValueListForKeys) {
+            System.out.println(uniqueValueListForKey.getKeyName());
+            System.out.println(uniqueValueListForKey.getValueMap().getUniqueValueOccurrence().toString());
+            System.out.println("\n");
         }
     }
 
 
     //todo decide if a key holds no information aka key is redundant
-
-    //todo get specific key value from JSON
-
-    //todo choose relevant keys from not redundant keys
 }

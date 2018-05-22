@@ -9,7 +9,6 @@ public class UniqueValueOccurrenceMap {
         add(valueKey);
     }
 
-    // TODO: 2018.05.21. remove shout
     public boolean isMyValueKey(String valueKey){
         return uniqueValueOccurrence.containsKey(valueKey);
     }

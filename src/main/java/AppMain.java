@@ -29,18 +29,25 @@ public class AppMain {
         redundantKeyList.add("crchash");
         redundantKeyList.add("181");
         redundantKeyList.add("facebook");
+        redundantKeyList.add("e");
+        // redundant keys just for not till I figure out how to work with number values
+        // probably will have to bind it to keys manually unfortunately
+        redundantKeyList.add("product_smartphone");
+        redundantKeyList.add("ugyfel_lakossagi");
+        redundantKeyList.add("akcio_irant_aktualisan_erdeklodo");
+        redundantKeyList.add("min");
         KeyContainer keyContainer = new KeyContainer(new HashMap<String, Integer>(), redundantKeyList);
         ValueRegex valueRegex = new ValueRegex(keyWithValueRegex, 1);
         KeyRegex keyRegexForValue = new KeyRegex(keyValueRegex, 1, 3, valueRegex);
         ArrayList<UniqueValueListForKey> uniqueValueListForKeys = new ArrayList<UniqueValueListForKey>();
         FileAnalyzer fileAnalyzerForValues = new FileAnalyzer(keyContainer, keyRegexForValue, textFileReader, uniqueValueListForKeys);
 
-        fileAnalyzerForValues.getKeysInFile();
+        fileAnalyzerForValues.getKeysInFile(1000000);
         fileAnalyzerForValues.keyFrequencyInFile();
         fileAnalyzerForValues.discardRedundantKeys();
         fileAnalyzerForValues.report();
 
-        fileAnalyzerForValues.getUniqueValuesForKeysInFile();
+        fileAnalyzerForValues.getUniqueValuesForKeysInFile(1000000);
         fileAnalyzerForValues.valueReport();
     }
 }

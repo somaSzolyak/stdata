@@ -1,4 +1,6 @@
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class UniqueValueListForKey {
     private UniqueValueOccurrenceMap valueMap;
@@ -30,11 +32,15 @@ public class UniqueValueListForKey {
     }
 
     private void add(String value) {
-        // TODO: 2018.05.21. check if value is a number. If so discard it. 
-        if (!valueMap.isMyValueKey(value)) {
-            this.valueMap.add(value);
-        } else {
-            valueMap.increaseOccurrence(value);
+        // TODO: 2018.05.21. check if value is a number. If so discard it.
+        Pattern pattern = Pattern.compile("[\\d]+");
+        Matcher matcher = pattern.matcher(value);
+        if (!matcher.find()) {
+            if (!valueMap.isMyValueKey(value)) {
+                valueMap.add(value);
+            } else {
+                valueMap.increaseOccurrence(value);
+            }
         }
     }
 }
