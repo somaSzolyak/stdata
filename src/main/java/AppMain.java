@@ -50,12 +50,12 @@ public class AppMain {
         ArrayList<UniqueValueListForKey> uniqueValueListForKeys = new ArrayList<UniqueValueListForKey>();
         FileAnalyzer fileAnalyzerForValues = new FileAnalyzer(keyContainer, keyRegexForValue, textFileReader, uniqueValueListForKeys, stringOnlyKeys);
 
-        fileAnalyzerForValues.getKeysInFile(1000000);
+        fileAnalyzerForValues.getKeysInFile();
         fileAnalyzerForValues.keyFrequencyInFile();
         fileAnalyzerForValues.discardRedundantKeys();
         fileAnalyzerForValues.report();
 
-        fileAnalyzerForValues.getUniqueValuesForKeysInFile(1000000);
+        fileAnalyzerForValues.getUniqueValuesForKeysInFile();
         fileAnalyzerForValues.valueReport();
     }
 }
