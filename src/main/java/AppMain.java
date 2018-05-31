@@ -71,6 +71,8 @@ public class AppMain {
     }
 
     // TODO: 2018.05.31. got to simplify the data holder classes as current implementation works, however it is messy
+    // TODO: 2018.05.31. drop KeyContainer and only manage a list of UniqueValueListForKey array this should
+    // TODO: 2018.05.31. hold the occurrences too and should be the new keychain instead the KeyContainer
     // TODO: 2018.05.31. maybe i'll need to switch from BufferedReader to streams
     // TODO: 2018.05.31. make threads to be able to stop the flow of the program
 }

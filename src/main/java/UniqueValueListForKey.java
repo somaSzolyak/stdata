@@ -5,6 +5,7 @@ import java.util.regex.Pattern;
 public class UniqueValueListForKey {
     private UniqueValueOccurrenceMap valueMap;
     private String keyName;
+    // keys that are only validly associated with string values are held in this list
     private List<String> stringOnlyKeys;
 
     public UniqueValueListForKey(String keyName, List<String> stringOnlyKeys) {
