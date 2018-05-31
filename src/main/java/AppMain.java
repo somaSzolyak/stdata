@@ -6,6 +6,7 @@ import java.util.List;
 
 public class AppMain {
     public static void main(String[] args) throws IOException {
+        long startTime = System.nanoTime();
 
         String path = "telekom_anonym";
         File file = new File(path);
@@ -54,8 +55,22 @@ public class AppMain {
         fileAnalyzerForValues.keyFrequencyInFile();
         fileAnalyzerForValues.discardRedundantKeys();
         fileAnalyzerForValues.report();
+        timer(startTime, "1st file reading time: ");
 
         fileAnalyzerForValues.getUniqueValuesForKeysInFile();
         fileAnalyzerForValues.valueReport();
+        timer(startTime, "program execution time: ");
     }
+
+    private static void timer(long startTime, String s) {
+        long endTime;
+        long totalTime;
+        endTime = System.nanoTime();
+        totalTime = (endTime - startTime)/(long) 1000000000;
+        System.out.println(s + totalTime);
+    }
+
+    // TODO: 2018.05.31. got to simplify the data holder classes as current implementation works, however it is messy
+    // TODO: 2018.05.31. maybe i'll need to switch from BufferedReader to streams
+    // TODO: 2018.05.31. make threads to be able to stop the flow of the program
 }
