@@ -12,7 +12,6 @@ public class KeyRegex {
     // endOffset describes where the substring (key) ends counted from the end of the original string in the matched group
     private int endOffset;
     private Pattern pattern;
-    private Matcher matcher;
     private ValueRegex valueRegex;
 
     public KeyRegex(String keySearcherRegex, int startOffset, int endOffset, ValueRegex valueRegex) {
@@ -25,7 +24,7 @@ public class KeyRegex {
 
     public List<String> getMatchesInString(String string) {
         ArrayList<String> matchList = new ArrayList<String>();
-        matcher = pattern.matcher(string);
+        Matcher matcher = pattern.matcher(string);
         while (matcher.find()) {
             matchList.add(string.substring(matcher.start()+startOffset, matcher.end()-endOffset));
         }

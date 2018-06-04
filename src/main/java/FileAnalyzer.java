@@ -83,7 +83,6 @@ public class FileAnalyzer {
     }
 
     public void keyFrequencyInFile() {
-        // TODO: 2018.05.31. correct rest of the errors
         List<KeyHolder> keys = keyContainer.getData();
         keyFrequency = new HashMap<String, Double>();
         // is a good example if the lambda does the same thing as the foreach
@@ -106,8 +105,8 @@ public class FileAnalyzer {
     }
 
     private void discardRedundantKeyByFrequency() {
-        KeyContainer tmpContainer = new KeyContainer(new ArrayList<KeyHolder>(), keyContainer.getRedundantKeyList(), keyContainer.getStringOnlyKeys());
-        Map<String, Double> tmpFrequency = new HashMap<String, Double>();
+        KeyContainer tmpContainer = new KeyContainer(new ArrayList<>(), keyContainer.getRedundantKeyList(), keyContainer.getStringOnlyKeys());
+        Map<String, Double> tmpFrequency = new HashMap<>();
         keyContainer.getData().stream()
                 .filter(keyHolder ->
                         keyFrequency.get(keyHolder.getKeyName()) > 0.009

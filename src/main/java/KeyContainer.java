@@ -1,3 +1,4 @@
+import java.util.Iterator;
 import java.util.List;
 
 public class KeyContainer {
@@ -45,7 +46,15 @@ public class KeyContainer {
     }
 
     public void remove(String key) {
-        keyChain.remove(key);
+        KeyHolder kh;
+        Iterator<KeyHolder> iterator = keyChain.iterator();
+        while (iterator.hasNext()) {
+            kh = iterator.next();
+            if (kh.getKeyName().equals(key)) {
+                iterator.remove();
+                break;
+            }
+        }
     }
 
     public List<String> getRedundantKeyList() {
