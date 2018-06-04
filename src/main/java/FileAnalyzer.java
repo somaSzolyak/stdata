@@ -1,23 +1,20 @@
 import java.io.IOException;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 public class FileAnalyzer {
     private KeyContainer keyContainer;
     private KeyRegex keyRegex;
     private Map<String, Double> keyFrequency;
-    private List<UniqueValueListForKey> uniqueValueListForKeys;
+    private List<KeyHolder> keyHolderList;
     private List<String> stringOnlyKeys;
     private TextFileReader textFileReader;
     private int lineCount = 0;
 
-    public FileAnalyzer(KeyContainer keyContainer, KeyRegex keyRegex, TextFileReader textFileReader, List<UniqueValueListForKey> uniqueValueListForKeys, List<String> stringOnlyKeys) {
+    public FileAnalyzer(KeyContainer keyContainer, KeyRegex keyRegex, TextFileReader textFileReader, List<KeyHolder> keyHolderList, List<String> stringOnlyKeys) {
         this.keyContainer = keyContainer;
         this.keyRegex = keyRegex;
         this.textFileReader = textFileReader;
-        this.uniqueValueListForKeys = uniqueValueListForKeys;
+        this.keyHolderList = keyHolderList;
         this.stringOnlyKeys = stringOnlyKeys;
     }
 
@@ -63,34 +60,37 @@ public class FileAnalyzer {
 
     private void getUniqueValuesForKeysInLine(String line) {
         ValueRegex valueRegex = keyRegex.getValueRegex();
-        UniqueValueListForKey uniqueValueListForKey;
-        for (String key : keyContainer.getData().keySet()) {
-            valueRegex.setKey(key);
-            if (isNewKeyValue(key) != null) {
-                uniqueValueListForKey = isNewKeyValue(key);
+        KeyHolder keyHolder;
+        for (KeyHolder key : keyContainer.getData()) {
+            valueRegex.setKey(key.getKeyName());
+            if (isNewKeyValue(key.getKeyName()) != null) {
+                keyHolder = isNewKeyValue(key.getKeyName());
             } else {
-                uniqueValueListForKey = new UniqueValueListForKey(key, stringOnlyKeys);
-                uniqueValueListForKeys.add(uniqueValueListForKey);
+                keyHolder = new KeyHolder(key.getKeyName(), stringOnlyKeys.contains(key.getKeyName()));
+                keyHolderList.add(keyHolder);
             }
-            uniqueValueListForKey.add(key, valueRegex.getMatchesInString(line));
+            keyHolder.add(key.getKeyName(), valueRegex.getMatchesInString(line));
         }
     }
 
-    private UniqueValueListForKey isNewKeyValue(String key) {
-        for (UniqueValueListForKey uniqueValueListForKey : uniqueValueListForKeys) {
-            if (uniqueValueListForKey.getKeyName().equals(key)) {
-                return uniqueValueListForKey;
+    private KeyHolder isNewKeyValue(String key) {
+        for (KeyHolder keyHolder : keyHolderList) {
+            if (keyHolder.getKeyName().equals(key)) {
+                return keyHolder;
             }
         }
         return null;
     }
 
     public void keyFrequencyInFile() {
-        Set<String> keys = keyContainer.getData().keySet();
+        // TODO: 2018.05.31. correct rest of the errors
+        List<KeyHolder> keys = keyContainer.getData();
         keyFrequency = new HashMap<String, Double>();
-        for (String key : keys) {
-            keyFrequency.put(key, (double) keyContainer.getData().get(key)/lineCount);
-        }
+        // is a good example if the lambda does the same thing as the foreach
+        keys.forEach(k -> keyFrequency.put(k.getKeyName(), (double) k.getKeyOccurrenceCounter()/lineCount));
+//        for (KeyHolder key : keys) {
+//            keyFrequency.put(key.getKeyName(), (double) key.getKeyOccurrenceCounter()/lineCount);
+//        }
     }
 
     public void discardRedundantKeys() {
@@ -106,22 +106,30 @@ public class FileAnalyzer {
     }
 
     private void discardRedundantKeyByFrequency() {
-        Map<String, Integer> tmpContainer = new HashMap<String, Integer>();
+        KeyContainer tmpContainer = new KeyContainer(new ArrayList<KeyHolder>(), keyContainer.getRedundantKeyList(), keyContainer.getStringOnlyKeys());
         Map<String, Double> tmpFrequency = new HashMap<String, Double>();
-        for (String key : keyContainer.getData().keySet()) {
-            if (keyFrequency.get(key) > 0.009 & keyFrequency.get(key) < 0.9) {
-                tmpContainer.put(key, keyContainer.getData().get(key));
-                tmpFrequency.put(key, keyFrequency.get(key));
-            }
-        }
-        keyContainer.getData().clear();
-        keyContainer.getData().putAll(tmpContainer);
+        keyContainer.getData().stream()
+                .filter(keyHolder ->
+                        keyFrequency.get(keyHolder.getKeyName()) > 0.009
+                                & keyFrequency.get(keyHolder.getKeyName()) < 0.9)
+                .forEach(keyHolder -> {
+                    tmpContainer.add(keyHolder);
+                    tmpFrequency.put(keyHolder.getKeyName(), keyFrequency.get(keyHolder.getKeyName()));
+                });
+
+//        for (String key : keyContainer.getData().keySet()) {
+//            if (keyFrequency.get(key) > 0.009 & keyFrequency.get(key) < 0.9) {
+//                tmpContainer.put(key, keyContainer.getData().get(key));
+//                tmpFrequency.put(key, keyFrequency.get(key));
+//            }
+//        }
+        keyContainer = tmpContainer;
         keyFrequency.clear();
         keyFrequency.putAll(tmpFrequency);
     }
 
     public void report() {
-        System.out.println(keyContainer.getData());
+        System.out.println(Arrays.toString(keyContainer.getData().stream().map(KeyHolder::getKeyName).toArray()));
         System.out.println(keyFrequency);
         System.out.println(keyRegex.getKeySearcherRegex());
         System.out.println(lineCount);
@@ -130,17 +138,14 @@ public class FileAnalyzer {
 
     public void valueReport() throws IOException {
         System.out.println("\nValueReport\n");
-        System.out.println("Number of keys: " + uniqueValueListForKeys.size());
+        System.out.println("Number of keys: " + keyHolderList.size());
         System.out.println(keyContainer.getData());
         System.out.println(keyFrequency);
         System.out.println(" ");
-        for (UniqueValueListForKey uniqueValueListForKey : uniqueValueListForKeys) {
-            System.out.println(uniqueValueListForKey.getKeyName());
-            System.out.println(uniqueValueListForKey.getValueMap().getUniqueValueOccurrence().toString());
+        for (KeyHolder keyHolder : keyHolderList) {
+            System.out.println(keyHolder.getKeyName());
+            System.out.println(keyHolder.getValueMap().getUniqueValueOccurrence().toString());
             System.out.println("\n");
         }
     }
-
-
-    //todo decide if a key holds no information aka key is redundant
 }

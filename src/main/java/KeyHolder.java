@@ -2,16 +2,18 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class KeyChain {
+public class KeyHolder {
     private UniqueValueOccurrenceMap valueMap;
     private String keyName;
-    // keys that are only validly associated with string values are held in this list
-    private List<String> stringOnlyKeys;
+    private int keyOccurrenceCounter;
+    // true if this key's values should only be strings that contains no numbers
+    private boolean isStringOnlyKey;
 
-    public KeyChain(String keyName, List<String> stringOnlyKeys) {
+    public KeyHolder(String keyName, boolean stringOnlyKey) {
         this.valueMap = null;
         this.keyName = keyName;
-        this.stringOnlyKeys = stringOnlyKeys;
+        this.isStringOnlyKey = stringOnlyKey;
+        this.keyOccurrenceCounter = 1;
     }
 
     public String getKeyName() {
@@ -21,6 +23,8 @@ public class KeyChain {
     public UniqueValueOccurrenceMap getValueMap() {
         return valueMap;
     }
+
+    public int getKeyOccurrenceCounter() { return keyOccurrenceCounter; }
 
     public void add(String keyName, List<String> valueList) {
         if (!this.keyName.equals(keyName)) {
@@ -36,7 +40,7 @@ public class KeyChain {
 
     private void add(String value) {
         // must hardcode key selection
-        if (stringOnlyKeys.contains(keyName)) {
+        if (isStringOnlyKey) {
             Pattern pattern = Pattern.compile("[\\d]+");
             Matcher matcher = pattern.matcher(value);
             if (!matcher.find()) {
@@ -53,5 +57,9 @@ public class KeyChain {
         } else {
             valueMap.increaseOccurrence(value);
         }
+    }
+
+    public void increaseOccurrence() {
+        this.keyOccurrenceCounter += 1;
     }
 }

@@ -45,19 +45,19 @@ public class AppMain {
         stringOnlyKeys.add("gender");
         stringOnlyKeys.add("locale");
 
-        KeyContainer keyContainer = new KeyContainer(new HashMap<String, Integer>(), redundantKeyList);
+        KeyContainer keyContainer = new KeyContainer(new ArrayList<KeyHolder>(), redundantKeyList, stringOnlyKeys);
         ValueRegex valueRegex = new ValueRegex(keyWithValueRegex, 1);
         KeyRegex keyRegexForValue = new KeyRegex(keyValueRegex, 1, 3, valueRegex);
-        ArrayList<UniqueValueListForKey> uniqueValueListForKeys = new ArrayList<UniqueValueListForKey>();
-        FileAnalyzer fileAnalyzerForValues = new FileAnalyzer(keyContainer, keyRegexForValue, textFileReader, uniqueValueListForKeys, stringOnlyKeys);
+        ArrayList<KeyHolder> keyHolders = new ArrayList<KeyHolder>();
+        FileAnalyzer fileAnalyzerForValues = new FileAnalyzer(keyContainer, keyRegexForValue, textFileReader, keyHolders, stringOnlyKeys);
 
-        fileAnalyzerForValues.getKeysInFile();
+        fileAnalyzerForValues.getKeysInFile(1000000);
         fileAnalyzerForValues.keyFrequencyInFile();
         fileAnalyzerForValues.discardRedundantKeys();
         fileAnalyzerForValues.report();
         timer(startTime, "1st file reading time: ");
 
-        fileAnalyzerForValues.getUniqueValuesForKeysInFile();
+        fileAnalyzerForValues.getUniqueValuesForKeysInFile(1000000);
         fileAnalyzerForValues.valueReport();
         timer(startTime, "program execution time: ");
     }
@@ -67,11 +67,11 @@ public class AppMain {
         long totalTime;
         endTime = System.nanoTime();
         totalTime = (endTime - startTime)/(long) 1000000000;
-        System.out.println(s + totalTime);
+        System.out.println(s + totalTime +"-seconds or " + totalTime/60 + "-minute(s)");
     }
 
     // TODO: 2018.05.31. got to simplify the data holder classes as current implementation works, however it is messy
-    // TODO: 2018.05.31. drop KeyContainer and only manage a list of UniqueValueListForKey array this should
+    // TODO: 2018.05.31. drop KeyContainer and only manage a list of KeyHolder array this should
     // TODO: 2018.05.31. hold the occurrences too and should be the new keychain instead the KeyContainer
     // TODO: 2018.05.31. maybe i'll need to switch from BufferedReader to streams
     // TODO: 2018.05.31. make threads to be able to stop the flow of the program
