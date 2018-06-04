@@ -116,13 +116,6 @@ public class FileAnalyzer {
                     tmpContainer.add(keyHolder);
                     tmpFrequency.put(keyHolder.getKeyName(), keyFrequency.get(keyHolder.getKeyName()));
                 });
-
-//        for (String key : keyContainer.getData().keySet()) {
-//            if (keyFrequency.get(key) > 0.009 & keyFrequency.get(key) < 0.9) {
-//                tmpContainer.put(key, keyContainer.getData().get(key));
-//                tmpFrequency.put(key, keyFrequency.get(key));
-//            }
-//        }
         keyContainer = tmpContainer;
         keyFrequency.clear();
         keyFrequency.putAll(tmpFrequency);
