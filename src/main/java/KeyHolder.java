@@ -2,13 +2,13 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class UniqueValueListForKey {
+public class KeyChain {
     private UniqueValueOccurrenceMap valueMap;
     private String keyName;
     // keys that are only validly associated with string values are held in this list
     private List<String> stringOnlyKeys;
 
-    public UniqueValueListForKey(String keyName, List<String> stringOnlyKeys) {
+    public KeyChain(String keyName, List<String> stringOnlyKeys) {
         this.valueMap = null;
         this.keyName = keyName;
         this.stringOnlyKeys = stringOnlyKeys;
