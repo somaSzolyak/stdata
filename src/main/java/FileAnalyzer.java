@@ -84,7 +84,7 @@ public class FileAnalyzer {
 
     public void keyFrequencyInFile() {
         List<KeyHolder> keys = keyContainer.getData();
-        keyFrequency = new HashMap<String, Double>();
+        keyFrequency = new HashMap<>();
         // is a good example if the lambda does the same thing as the foreach
         keys.forEach(k -> keyFrequency.put(k.getKeyName(), (double) k.getKeyOccurrenceCounter()/lineCount));
 //        for (KeyHolder key : keys) {
@@ -128,10 +128,10 @@ public class FileAnalyzer {
         System.out.println("\n");
     }
 
-    public void valueReport() throws IOException {
+    public void valueReport() {
         System.out.println("\nValueReport\n");
         System.out.println("Number of keys: " + keyHolderList.size());
-        System.out.println(keyContainer.getData());
+        System.out.println(Arrays.toString(keyContainer.getData().stream().map(KeyHolder::getKeyName).toArray()));
         System.out.println(keyFrequency);
         System.out.println(" ");
         for (KeyHolder keyHolder : keyHolderList) {
