@@ -44,20 +44,20 @@ public class AppMain {
         stringOnlyKeys.add("gender");
         stringOnlyKeys.add("locale");
 
-        KeyContainer keyContainer = new KeyContainer(new ArrayList<KeyHolder>(), redundantKeyList, stringOnlyKeys);
+        KeyContainer keyContainer = new KeyContainer(new ArrayList<>(), redundantKeyList, stringOnlyKeys);
         ValueRegex valueRegex = new ValueRegex(keyWithValueRegex, 1);
         KeyRegex keyRegexForValue = new KeyRegex(keyValueRegex, 1, 3, valueRegex);
         ArrayList<KeyHolder> keyHolders = new ArrayList<KeyHolder>();
-        FileAnalyzer fileAnalyzerForValues = new FileAnalyzer(keyContainer, keyRegexForValue, textFileReader, keyHolders, stringOnlyKeys);
+        FileAnalyzerTemplate fileAnalyzerTemplateForValues = new FileAnalyzerTemplate(keyContainer, keyRegexForValue, textFileReader, keyHolders, stringOnlyKeys);
 
-        fileAnalyzerForValues.getKeysInFile(1000000);
-        fileAnalyzerForValues.keyFrequencyInFile();
-        fileAnalyzerForValues.discardRedundantKeys();
-        fileAnalyzerForValues.report();
+        fileAnalyzerTemplateForValues.getKeysInFile(1000000);
+        fileAnalyzerTemplateForValues.keyFrequencyInFile();
+        fileAnalyzerTemplateForValues.discardRedundantKeys();
+        fileAnalyzerTemplateForValues.report();
         timer(startTime, "1st file reading time: ");
 
-        fileAnalyzerForValues.getUniqueValuesForKeysInFile(1000000);
-        fileAnalyzerForValues.valueReport();
+        fileAnalyzerTemplateForValues.getUniqueValuesForKeysInFile(1000000);
+        fileAnalyzerTemplateForValues.valueReport();
         timer(startTime, "program execution time: ");
     }
 
@@ -68,7 +68,5 @@ public class AppMain {
         totalTime = (endTime - startTime)/(long) 1000000000;
         System.out.println(s + totalTime +"-seconds or " + totalTime/60 + "-minute(s)");
     }
-
-    // TODO: 2018.05.31. maybe i'll need to switch from BufferedReader to I/O streams
     // TODO: 2018.05.31. make threads to be able to stop the flow of the program
 }
