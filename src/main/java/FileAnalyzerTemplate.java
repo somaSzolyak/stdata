@@ -1,7 +1,7 @@
 import java.io.IOException;
 import java.util.*;
 
-public class FileAnalyzer {
+public class FileAnalyzerTemplate {
     private KeyContainer keyContainer;
     private KeyRegex keyRegex;
     private Map<String, Double> keyFrequency;
@@ -10,7 +10,7 @@ public class FileAnalyzer {
     private TextFileReader textFileReader;
     private int lineCount = 0;
 
-    public FileAnalyzer(KeyContainer keyContainer, KeyRegex keyRegex, TextFileReader textFileReader, List<KeyHolder> keyHolderList, List<String> stringOnlyKeys) {
+    public FileAnalyzerTemplate(KeyContainer keyContainer, KeyRegex keyRegex, TextFileReader textFileReader, List<KeyHolder> keyHolderList, List<String> stringOnlyKeys) {
         this.keyContainer = keyContainer;
         this.keyRegex = keyRegex;
         this.textFileReader = textFileReader;
@@ -22,6 +22,7 @@ public class FileAnalyzer {
         keyContainer.add(keyRegex.getMatchesInString(line));
     }
 
+
     public void getKeysInFile() throws IOException {
         String line;
         while ((line = textFileReader.ReadNextLine()) != null) {
@@ -30,6 +31,7 @@ public class FileAnalyzer {
         }
         textFileReader.close();
     }
+
 
     public void getKeysInFile(int lineNumber) throws IOException {
         String line;
@@ -41,6 +43,7 @@ public class FileAnalyzer {
         textFileReader.close();
     }
 
+
     public void getUniqueValuesForKeysInFile() throws IOException {
         textFileReader.reset();
         String line;
@@ -48,6 +51,7 @@ public class FileAnalyzer {
             getUniqueValuesForKeysInLine(line);
         }
     }
+
 
     public void getUniqueValuesForKeysInFile(int lineNumber) throws IOException {
         textFileReader.reset();
@@ -82,6 +86,7 @@ public class FileAnalyzer {
         return null;
     }
 
+
     public void keyFrequencyInFile() {
         List<KeyHolder> keys = keyContainer.getData();
         keyFrequency = new HashMap<>();
@@ -91,6 +96,7 @@ public class FileAnalyzer {
 //            keyFrequency.put(key.getKeyName(), (double) key.getKeyOccurrenceCounter()/lineCount);
 //        }
     }
+
 
     public void discardRedundantKeys() {
         discardRedundantKeyByFrequency();
@@ -127,6 +133,7 @@ public class FileAnalyzer {
         System.out.println(lineCount);
         System.out.println("\n");
     }
+
 
     public void valueReport() {
         System.out.println("\nValueReport\n");
