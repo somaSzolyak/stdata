@@ -64,4 +64,8 @@ public class KeyContainer {
     public List<String> getStringOnlyKeys() {
         return stringOnlyKeys;
     }
+
+    public void addReducedKeyChain(List<KeyHolder> tmpContainer) {
+        if (tmpContainer != null & tmpContainer.size() != 0) keyChain = tmpContainer;
+    }
 }
