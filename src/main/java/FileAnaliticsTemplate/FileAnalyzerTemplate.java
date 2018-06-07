@@ -1,4 +1,4 @@
-package ModelTemplate;
+package FileAnaliticsTemplate;
 
 import Model.*;
 
