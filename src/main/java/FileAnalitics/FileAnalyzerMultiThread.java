@@ -1,3 +1,10 @@
+package FileAnalitics;
+
+import Model.KeyContainer;
+import Model.KeyHolder;
+import Model.KeyRegex;
+import Model.TextFileReader;
+
 import java.io.IOException;
 import java.util.List;
 import java.util.Map;
