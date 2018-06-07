@@ -1,3 +1,8 @@
+import FileAnalitics.FileAnalyzer;
+import FileAnalitics.FileAnalyzerSingleThread;
+import Model.*;
+import FileAnaliticsTemplate.FileAnalyzerTemplate;
+
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -55,7 +60,7 @@ public class AppMain {
         ArrayList<KeyHolder> keyHolders2 = new ArrayList<>();
         FileAnalyzerTemplate fileAnalyzerTemplateForValues = new FileAnalyzerTemplate(keyContainer, keyRegexForValue,
                 textFileReader, keyHolders, stringOnlyKeys);
-        FileAnalyzer fileAnalyzerForValues = new FileAnalyzerSingleThread(keyContainer2, keyRegexForValue2, textFileReader2,
+        FileAnalyzer fileAnalyzerForValues = new FileAnalyzerSingleThread(keyContainer2, keyRegexForValue2, textFileReader,
                 keyHolders2, stringOnlyKeys, new HashMap<>());
 
         fileAnalyzerTemplateForValues.getKeysInFile(1000000);
@@ -68,6 +73,7 @@ public class AppMain {
         fileAnalyzerTemplateForValues.valueReport();
         timer(startTime, "program execution time: ");
 
+        textFileReader.reset();
         startTime = System.nanoTime();
 
         fileAnalyzerForValues.getKeysInFile(1000000);

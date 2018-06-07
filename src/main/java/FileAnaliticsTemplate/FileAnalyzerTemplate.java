@@ -1,3 +1,7 @@
+package ModelTemplate;
+
+import Model.*;
+
 import java.io.IOException;
 import java.util.*;
 
@@ -92,7 +96,7 @@ public class FileAnalyzerTemplate {
         keyFrequency = new HashMap<>();
         // is a good example if the lambda does the same thing as the foreach
         keys.forEach(k -> keyFrequency.put(k.getKeyName(), (double) k.getKeyOccurrenceCounter()/lineCount));
-//        for (KeyHolder key : keys) {
+//        for (Model.KeyHolder key : keys) {
 //            keyFrequency.put(key.getKeyName(), (double) key.getKeyOccurrenceCounter()/lineCount);
 //        }
     }
