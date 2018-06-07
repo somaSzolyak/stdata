@@ -1,5 +1,4 @@
 import FileAnalitics.FileAnalyzer;
-import FileAnalitics.FileAnalyzerSingleThread;
 import Model.*;
 import FileAnaliticsTemplate.FileAnalyzerTemplate;
 
@@ -60,7 +59,7 @@ public class AppMain {
         ArrayList<KeyHolder> keyHolders2 = new ArrayList<>();
         FileAnalyzerTemplate fileAnalyzerTemplateForValues = new FileAnalyzerTemplate(keyContainer, keyRegexForValue,
                 textFileReader, keyHolders, stringOnlyKeys);
-        FileAnalyzer fileAnalyzerForValues = new FileAnalyzerSingleThread(keyContainer2, keyRegexForValue2, textFileReader,
+        FileAnalyzer fileAnalyzerForValues = new FileAnalyzer(keyContainer2, keyRegexForValue2, textFileReader,
                 keyHolders2, stringOnlyKeys, new HashMap<>());
 
         fileAnalyzerTemplateForValues.getKeysInFile(1000000);
