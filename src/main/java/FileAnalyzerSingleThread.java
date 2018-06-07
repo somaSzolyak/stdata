@@ -16,7 +16,7 @@ public class FileAnalyzerSingleThread extends FileAnalyzer {
     @Override
     public void getKeysInFile() throws IOException {
         String line;
-        while ((line = getTextFileReader().ReadNextLine()) != null) {
+        while ((line = getTextFileReader().readNextLine()) != null) {
             getKeysInLine(line);
             incrementLineCount();
         }
@@ -26,7 +26,7 @@ public class FileAnalyzerSingleThread extends FileAnalyzer {
     @Override
     public void getKeysInFile(int lineNumber) throws IOException {
         String line;
-        while ((line = getTextFileReader().ReadNextLine()) != null & lineNumber != 0) {
+        while ((line = getTextFileReader().readNextLine()) != null & lineNumber != 0) {
             getKeysInLine(line);
             incrementLineCount();
             lineNumber--;
@@ -38,7 +38,7 @@ public class FileAnalyzerSingleThread extends FileAnalyzer {
     public void getUniqueValuesForKeysInFile() throws IOException {
         getTextFileReader().reset();
         String line;
-        while ((line = getTextFileReader().ReadNextLine()) != null) {
+        while ((line = getTextFileReader().readNextLine()) != null) {
             getUniqueValuesForKeysInLine(line);
         }
     }
@@ -48,11 +48,11 @@ public class FileAnalyzerSingleThread extends FileAnalyzer {
         KeyHolder keyHolder;
         for (KeyHolder key : getKeyContainer().getData()) {
             valueRegex.setKey(key.getKeyName());
-            keyHolder = isNewKeyValue(key.getKeyName());
-            if (keyHolder == null) {
+            if (isNewKeyValue(key.getKeyName()) == null) {
                 keyHolder = new KeyHolder(key.getKeyName(), getStringOnlyKeys().contains(key.getKeyName()));
                 getKeyHolderList().add(keyHolder);
-            }
+            } else keyHolder = isNewKeyValue(key.getKeyName());
+
             keyHolder.add(key.getKeyName(), valueRegex.getMatchesInString(line));
         }
     }
@@ -70,7 +70,7 @@ public class FileAnalyzerSingleThread extends FileAnalyzer {
     public void getUniqueValuesForKeysInFile(int lineNumber) throws IOException {
         getTextFileReader().reset();
         String line;
-        while ((line = getTextFileReader().ReadNextLine()) != null & lineNumber != 0) {
+        while ((line = getTextFileReader().readNextLine()) != null & lineNumber != 0) {
             getUniqueValuesForKeysInLine(line);
             lineNumber--;
         }
@@ -96,7 +96,7 @@ public class FileAnalyzerSingleThread extends FileAnalyzer {
     }
 
     private void discardRedundantKeyByFrequency() {
-        List<KeyHolder> tmpContainer = new ArrayList<KeyHolder>();
+        List<KeyHolder> tmpContainer = new ArrayList<>();
         Map<String, Double> tmpFrequency = new HashMap<>();
         getKeyContainer().getData().stream()
                 .filter(keyHolder ->
@@ -124,5 +124,7 @@ public class FileAnalyzerSingleThread extends FileAnalyzer {
             System.out.println(keyHolder.getValueMap().getUniqueValueOccurrence().toString());
             System.out.println("\n");
         }
+        System.out.println("lineCount: " + getLineCount());
+
     }
 }

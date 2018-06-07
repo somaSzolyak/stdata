@@ -23,9 +23,7 @@ public class KeyContainer {
 
     public void add(List<String> keyList) {
         for (String key : keyList) {
-            if (redundantKeyList.contains(key)) {
-                continue;
-            }
+            if (redundantKeyList.contains(key)) continue;
             this.add(key);
         }
     }

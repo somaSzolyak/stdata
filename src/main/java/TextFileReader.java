@@ -9,7 +9,7 @@ public class TextFileReader {
         this.file = file;
     }
 
-    public String ReadNextLine () throws IOException {
+    public String readNextLine() throws IOException {
         return bufferedReader.ready() ? bufferedReader.readLine() : null;
     }
 

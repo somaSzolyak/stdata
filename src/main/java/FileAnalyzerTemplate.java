@@ -25,7 +25,7 @@ public class FileAnalyzerTemplate {
 
     public void getKeysInFile() throws IOException {
         String line;
-        while ((line = textFileReader.ReadNextLine()) != null) {
+        while ((line = textFileReader.readNextLine()) != null) {
             getKeysInLine(line);
             lineCount++;
         }
@@ -35,7 +35,7 @@ public class FileAnalyzerTemplate {
 
     public void getKeysInFile(int lineNumber) throws IOException {
         String line;
-        while ((line = textFileReader.ReadNextLine()) != null & lineNumber != 0) {
+        while ((line = textFileReader.readNextLine()) != null & lineNumber != 0) {
             getKeysInLine(line);
             lineCount++;
             lineNumber--;
@@ -47,7 +47,7 @@ public class FileAnalyzerTemplate {
     public void getUniqueValuesForKeysInFile() throws IOException {
         textFileReader.reset();
         String line;
-        while ((line = textFileReader.ReadNextLine()) != null) {
+        while ((line = textFileReader.readNextLine()) != null) {
             getUniqueValuesForKeysInLine(line);
         }
     }
@@ -56,7 +56,7 @@ public class FileAnalyzerTemplate {
     public void getUniqueValuesForKeysInFile(int lineNumber) throws IOException {
         textFileReader.reset();
         String line;
-        while ((line = textFileReader.ReadNextLine()) != null & lineNumber != 0) {
+        while ((line = textFileReader.readNextLine()) != null & lineNumber != 0) {
             getUniqueValuesForKeysInLine(line);
             lineNumber--;
         }
@@ -146,5 +146,6 @@ public class FileAnalyzerTemplate {
             System.out.println(keyHolder.getValueMap().getUniqueValueOccurrence().toString());
             System.out.println("\n");
         }
+        System.out.println("lineCount: " + lineCount);
     }
 }
