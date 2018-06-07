@@ -1,3 +1,5 @@
+package Model;
+
 import java.io.*;
 
 public class TextFileReader {
@@ -9,7 +11,7 @@ public class TextFileReader {
         this.file = file;
     }
 
-    public String readNextLine() throws IOException {
+    public synchronized String readNextLine() throws IOException {
         return bufferedReader.ready() ? bufferedReader.readLine() : null;
     }
 
