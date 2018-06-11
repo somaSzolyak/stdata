@@ -2,6 +2,7 @@ package FileAnalytics;
 
 import Model.*;
 
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.*;
 
@@ -24,6 +25,10 @@ public class FileAnalyzer {
         this.stringOnlyKeys = stringOnlyKeys;
     }
 
+    public KeyContainer getData() {
+        return keyContainer;
+    }
+
     public List<KeyHolder> getKeyHolderList() {
         return keyHolderList;
     }
@@ -38,7 +43,6 @@ public class FileAnalyzer {
             getKeysInLine(line);
             lineCount++;
         }
-        textFileReader.close();
     }
 
     public void getKeysInFile(int lineNumber) throws IOException {
@@ -48,11 +52,9 @@ public class FileAnalyzer {
             lineCount++;
             lineNumber--;
         }
-        textFileReader.close();
     }
 
-    public void getUniqueValuesForKeysInFile() throws IOException {
-        textFileReader.reset();
+    private void getUniqueValuesForKeysInFile() throws IOException {
         String line;
         while ((line = textFileReader.readNextLine()) != null) {
             getUniqueValuesForKeysInLine(line);
@@ -83,7 +85,6 @@ public class FileAnalyzer {
     }
 
     public void getUniqueValuesForKeysInFile(int lineNumber) throws IOException {
-        textFileReader.reset();
         String line;
         while ((line =textFileReader.readNextLine()) != null & lineNumber != 0) {
             getUniqueValuesForKeysInLine(line);

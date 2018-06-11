@@ -68,4 +68,11 @@ public class KeyContainer {
     public void addReducedKeyChain(List<KeyHolder> tmpContainer) {
         if (tmpContainer != null & tmpContainer.size() != 0) keyChain = tmpContainer;
     }
+
+    public void add(KeyContainer result) {
+        for (KeyHolder kh : result.keyChain) {
+            if (keyChain.stream().noneMatch(keyHolder -> (kh.getKeyName().equals(keyHolder.getKeyName()))))
+                keyChain.add(kh);
+        }
+    }
 }
